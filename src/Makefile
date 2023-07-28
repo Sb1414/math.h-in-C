@@ -4,23 +4,23 @@ all: test gcov_report
 
 re: clean all
 
-test: s21_math.a build_s21_math
-	gcc $(FLAGS) -lcheck s21_math_test.c s21_math.a -o s21_tests
-	./s21_tests
+test: sb_math.a build_sb_math
+	gcc $(FLAGS) -lcheck sb_math_test.c sb_math.a -o sb_tests
+	./sb_tests
 
-gcov_report: s21_math.c s21_math_test.c
-	gcc $(FLAGS) --coverage -lcheck s21_math.c s21_math_test.c -o gcov_report
+gcov_report: sb_math.c sb_math_test.c
+	gcc $(FLAGS) --coverage -lcheck sb_math.c sb_math_test.c -o gcov_report
 	./gcov_report
 	lcov -t "./gcov_report" -o gcov_report.info --no-external -c -d .
 	genhtml -o report gcov_report.info
 	open ./report/index.html
 
-s21_math.a: build_s21_math
+sb_math.a: build_sb_math
 
-build_s21_math:
-	gcc $(FLAGS) -c s21_math.c
-	ar rc s21_math.a s21_math.o
-	ranlib s21_math.a
+build_sb_math:
+	gcc $(FLAGS) -c sb_math.c
+	ar rc sb_math.a sb_math.o
+	ranlib sb_math.a
 
 check:
 	cppcheck *.c
@@ -40,9 +40,9 @@ clean_test:
 	rm -rf *.info
 	rm -rf gcov_report
 	rm -rf report
-	rm -rf s21_tests
+	rm -rf sb_tests
 	rm -rf cpplint.py
 	rm -rf CPPLINT.cfg
 
 clean: clean_lib clean_test clean_obj
-	rm -rf s21_math
+	rm -rf sb_math
